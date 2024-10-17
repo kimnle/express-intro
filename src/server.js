@@ -36,9 +36,21 @@ app.get("/",
     });
 });
 
-app.post("/", (request, response) => {
+app.post("/", kimMiddleWare, (request, response) => {
     response.json({
         message: "POST request received!!"
+    });
+});
+
+// http://localhost:3000/bananas
+app.post("/bananas",
+    (request, response, next) => {
+        console.log("Bananas route has run");
+        next();
+    },
+    (request, response) => {
+    response.json({
+        message: "POST bananas received!!"
     });
 });
 
