@@ -7,10 +7,32 @@ const app = express();
 // GET localhost:3000
 // .get("/", (req, res) => {})
 // .get("/", (banana, elephant) => {})
-app.get("/", (request, response) => {
+
+// instance.verb(routePath,
+//  middleware,
+//  middleware,
+//  route handler
+// )
+
+function kimMiddleWare(request, response, next) {
+    console.log("Kim middleware is now running!!");
+    request.coolCoderAcademyStuff = {
+        ...request.coolCoderAcademyStuff,
+        kim: "cool programmer"
+    };
+    // This doesn't work becasue request.coolCoderAcademyStuff wasn't defined
+    // request.coolCoderAcademyStuff.kim = "cool programmer!!";
+    next();
+}
+
+app.get("/",
+    // middleware function goes here
+    kimMiddleWare,
+    (request, response) => {
     // response.send("<h1>Hello world!!</h1>");
     response.json({
-        message: "Hello world!!"
+        message: "Hello world!!",
+        customStuff: request.coolCoderAcademyStuff
     });
 });
 
